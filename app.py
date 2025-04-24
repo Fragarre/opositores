@@ -8,10 +8,38 @@ from langchain.agents import Tool, initialize_agent
 from langchain.agents.agent_types import AgentType
 from langchain.memory import ConversationBufferMemory
 from fpdf import FPDF
+from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
+# Usuarios autorizados
+USERS = {
+    os.getenv("USER_ADMIN"): os.getenv("PASS_ADMIN")
+}
+
+# Login simple
+def login():
+    st.title("🔐 Inicio de sesión")
+    username = st.text_input("Usuario")
+    password = st.text_input("Contraseña", type="password")
+    login_button = st.button("Iniciar sesión")
+
+    if login_button:
+        if username in USERS and USERS[username] == password:
+            st.session_state["logged_in"] = True
+            st.rerun()
+        else:
+            st.error("❌ Usuario o contraseña incorrectos.")
+
+# Verificar login
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    login()
+    st.stop()
+    
 # Cargar variables de entorno
-os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+
+# os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
 # Sidebar: configuración del modelo
 st.sidebar.title("ℹ️ Información")
