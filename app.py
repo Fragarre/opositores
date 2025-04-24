@@ -8,14 +8,20 @@ from langchain.agents import Tool, initialize_agent
 from langchain.agents.agent_types import AgentType
 from langchain.memory import ConversationBufferMemory
 from fpdf import FPDF
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
+# from dotenv import load_dotenv
+# import os
 
-# Usuarios autorizados
+# load_dotenv()
+
+# Usuarios autorizados local
+# USERS = {
+#     os.getenv("USER_ADMIN"): os.getenv("PASS_ADMIN")
+# }
+
+# Usuarios autorizados deploy
 USERS = {
-    os.getenv("USER_ADMIN"): os.getenv("PASS_ADMIN")
+    st.secrets["AUTH"]["USER_ADMIN"]: st.secrets["AUTH"]["PASS_ADMIN"]
 }
 
 # Login simple
@@ -28,6 +34,8 @@ def login():
     if login_button:
         if username in USERS and USERS[username] == password:
             st.session_state["logged_in"] = True
+            st.session_state["username"] = username
+            st.success("✅ Acceso concedido")
             st.rerun()
         else:
             st.error("❌ Usuario o contraseña incorrectos.")
@@ -36,7 +44,7 @@ def login():
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     login()
     st.stop()
-    
+
 # Cargar variables de entorno
 
 # os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
