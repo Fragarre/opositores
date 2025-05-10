@@ -1,5 +1,3 @@
 .streamlit/secrets.toml
 .env
 venv
-app-copia.py
-app-original.py
