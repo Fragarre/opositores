@@ -110,7 +110,7 @@ def nueva_sesion():
     st.rerun()    # Reiniciar la app
 
 # Interfaz principal
-st.title("🧑‍⚖️ Asistente para Opositores - GVA")
+st.title("🧑‍⚖️ Asistente para Opositores - GVA versión: 0.4")
 st.info("Las respuestas pueden tardar. Ten paciencia")
 
 # Sección 1: Consulta legal
